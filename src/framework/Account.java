@@ -1,7 +1,9 @@
 package framework;
 
-public abstract class Account implements IAccount {
-
+public class Account implements IAccount {
+	
+	private String accountNumber;
+	
     @Override
     public double getBalance() {
         return 0;
@@ -17,5 +19,7 @@ public abstract class Account implements IAccount {
         return null;
     }
 
+    public void getReport() {
 
+    }
 }
