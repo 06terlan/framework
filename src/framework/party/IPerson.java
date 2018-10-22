@@ -1,4 +1,4 @@
-package framework;
+package framework.party;
 
 public interface IPerson {
 }

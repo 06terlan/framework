@@ -1,5 +1,7 @@
 package framework;
 
+import framework.party.Party;
+
 public interface IAccount {
 
     public double getBalance();

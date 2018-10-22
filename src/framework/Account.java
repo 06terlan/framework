@@ -1,5 +1,7 @@
 package framework;
 
+import framework.party.Party;
+
 public class Account implements IAccount {
 	
 	private String accountNumber;
