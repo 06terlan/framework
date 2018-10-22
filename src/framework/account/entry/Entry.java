@@ -1,4 +1,4 @@
-package framework.account.entity;
+package framework.account.entry;
 
 import java.time.LocalDate;
 

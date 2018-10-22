@@ -3,8 +3,8 @@ package framework.account;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.Party;
-import framework.account.entity.Entry;
+import framework.account.entry.Entry;
+import framework.party.Party;
 
 public class Account implements IAccount {
 	

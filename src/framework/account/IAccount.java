@@ -1,7 +1,7 @@
 package framework.account;
 
-import framework.Party;
-import framework.account.entity.Entry;
+import framework.account.entry.Entry;
+import framework.party.Party;
 
 public interface IAccount {
 
