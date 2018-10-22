@@ -8,7 +8,6 @@ import framework.party.Party;
 
 public class Account implements IAccount {
 	
-	
 	private String accountNumber;
 	private List<Entry> entries;
 	private Party party;
