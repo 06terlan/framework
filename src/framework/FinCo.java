@@ -6,4 +6,7 @@ public class FinCo {
 
     }
 
+    public AccountFactory accountFactory() {
+    	return new AccountFactory();
+    }
 }
