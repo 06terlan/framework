@@ -1,7 +1,5 @@
 package framework.party;
 
-import framework.IOrganization;
-
 import java.util.List;
 
 public class Company extends Party implements IOrganization {

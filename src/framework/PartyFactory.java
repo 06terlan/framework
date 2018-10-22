@@ -1,4 +1,7 @@
-package framework.party;
+package framework;
+
+import framework.party.Company;
+import framework.party.Person;
 
 import java.time.LocalDate;
 

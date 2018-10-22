@@ -1,7 +1,5 @@
 package framework.party;
 
-import framework.Account;
-
 import java.util.ArrayList;
 import java.util.List;
 
