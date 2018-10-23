@@ -1,5 +1,6 @@
 package framework.party;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Company extends Party implements IOrganization {
@@ -8,6 +9,8 @@ public class Company extends Party implements IOrganization {
 
     public Company(String name, String street, String city, String state, int zip, String email) {
         super(name, street, city, state, zip, email);
+        
+        employees = new ArrayList<>();
     }
 
     public void hirePerson(Person person) {

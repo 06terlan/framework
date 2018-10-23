@@ -1,5 +1,6 @@
 package framework.account;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,9 @@ public class Account implements IAccount {
         return entries.stream().mapToDouble(e->e.getAmount()).sum();
     }
 
-    public void addEntry(Entry entry) {
-    	entries.add(entry);
+    @Override
+    public void depositMoney(double mooney) {
+    	entries.add(new Entry(mooney, LocalDate.now(), "Deposit Money"));
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Account implements IAccount {
     
     @Override
     public void report() {
-
+    	System.out.println(entries);
     }
 
 	public String getAccountNumber() {
