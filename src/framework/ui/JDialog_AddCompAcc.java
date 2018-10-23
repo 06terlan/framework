@@ -6,23 +6,27 @@ import framework.PartyFactory;
 import framework.account.Account;
 import framework.party.Company;
 import framework.party.Party;
-import framework.party.Person;
 
 import java.awt.*;
+import java.util.*;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.*;
-
+import javax.swing.table.DefaultTableModel;
 
 
 public class JDialog_AddCompAcc extends JDialog
 {
     private FinCo parentframe;
-    
-	public JDialog_AddCompAcc(FinCo parent)
-	{
-		super(parent);
-		parentframe=parent;
+    protected List<Party> parties;
+    protected DefaultTableModel model;
+	private Object rowdata[];
 
+
+	public JDialog_AddCompAcc(List<Party> parties, DefaultTableModel model)
+	{
+		this.parties = parties;
+		this.model = model;
 		//{{ INIT_CONTROLS 
 		setTitle("Add compamy account");
 		setModal(true);
@@ -137,17 +141,28 @@ public class JDialog_AddCompAcc extends JDialog
 		String street = JTextField_STR.getText();
 		String city = JTextField_CT.getText();
 		String state = JTextField_ST.getText();
-		int zip = Integer.getInteger(JTextField_ZIP.getText());
+		int zip = Integer.parseInt(JTextField_ZIP.getText());
 		String email = JTextField_EM.getText();
 
-		Company newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
+		Party newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
 
-		if (!parentframe.parties.contains(newCompany)) {
-			parentframe.parties.add(newCompany);
+		if (!parties.contains(newCompany)) {
+			parties.add(newCompany);
+		} else {
+			int index = parties.indexOf(newCompany);
+			newCompany = parties.get(index);
 		}
 
 		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber);
-		parentframe.accounts.add(account);
+		newCompany.addAccount(account);
+		rowdata = new Object[model.getColumnCount()];
+		rowdata[0] = account.getAccountNumber();
+		rowdata[1] = newCompany.getName();
+		rowdata[2] = newCompany.getCity();
+		rowdata[3] = newCompany.getState();
+		rowdata[4] = "Company";
+		rowdata[5] = "0";
+		model.addRow(rowdata);
 
 		dispose();
 	}

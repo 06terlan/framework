@@ -24,7 +24,7 @@ public class FinCo extends JFrame {
     public void run() {
     	java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	main = new MainScreen();
+            	main = new MainScreen(parties);
             	main.setVisible(true);
             }
     	});

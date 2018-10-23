@@ -85,7 +85,7 @@ public class JDialog_Deposit extends JDialog
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
-        parentframe.amountDeposit=JTextField_Deposit.getText();
+        //parentframe.amountDeposit=JTextField_Deposit.getText();
         dispose();
 	}
 

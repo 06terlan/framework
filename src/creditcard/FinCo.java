@@ -37,16 +37,7 @@ public class FinCo extends framework.FinCo {
             System.exit(1);
         }
     }
-    
-    @Override
-    public DefaultTableModel getModel() {
-    	DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("AccountNr");
-        model.addColumn("Name");
-        model.addColumn("City");
-        model.addColumn("asdasd");
-        return model;
-    }
+
    
     
     

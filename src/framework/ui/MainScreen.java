@@ -3,6 +3,7 @@ package framework.ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import framework.FinCo;
+import framework.party.Party;
 
 public class MainScreen extends JFrame{
 	
@@ -28,12 +30,13 @@ public class MainScreen extends JFrame{
     private JScrollPane JScrollPane1;
     private JTable JTable1;
     protected DefaultTableModel model;
+    protected List<Party> parties;
     private Object rowdata[];
     public boolean newAccount;
     
-	public MainScreen() {
+	public MainScreen(List<Party> parties) {
 		myframe = this;
-		
+		this.parties = parties;
 		setTitle(getTitle());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout(0,0));
@@ -104,8 +107,8 @@ public class MainScreen extends JFrame{
         model.addColumn("AccountNr");
         model.addColumn("Name");
         model.addColumn("City");
+        model.addColumn("State");
         model.addColumn("P/C");
-        model.addColumn("Ch/S");
         model.addColumn("Amount");
         return model;
     }
@@ -193,22 +196,22 @@ public class MainScreen extends JFrame{
 
     void JButtonCompAC_actionPerformed(ActionEvent event)
     {
-//        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
-//        pac.setBounds(450, 20, 300, 330);
-//        pac.setVisible(true);
-//
-//        if (newAccount){
-//            // add row to table
-//            rowdata[0] = accountnr;
-//            rowdata[1] = clientName;
-//            rowdata[2] = city;
-//            rowdata[3] = "C";
-//            rowdata[4] = accountType;
-//            rowdata[5] = "0";
-//            model.addRow(rowdata);
-//            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-//            newAccount=false;
-//        }
+        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(parties, model);
+        pac.setBounds(450, 20, 300, 330);
+        pac.setVisible(true);
+
+        if (newAccount){
+            // add row to table
+            rowdata[0] = accountnr;
+            rowdata[1] = clientName;
+            rowdata[2] = city;
+            rowdata[3] = "C";
+            rowdata[4] = accountType;
+            rowdata[5] = "0";
+            model.addRow(rowdata);
+            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            newAccount=false;
+        }
 
     }
 
