@@ -27,14 +27,7 @@ public class JDialog_AddPAcc extends JDialog
 		getContentPane().setLayout(null);
 		setSize(283,303);
 		setVisible(false);
-		JRadioButton_Chk.setText("Checkings");
-		JRadioButton_Chk.setActionCommand("Checkings");
-		getContentPane().add(JRadioButton_Chk);
-		JRadioButton_Chk.setBounds(36,0,84,24);
-		JRadioButton_Sav.setText("Savings");
-		JRadioButton_Sav.setActionCommand("Savings");
-		getContentPane().add(JRadioButton_Sav);
-		JRadioButton_Sav.setBounds(36,24,84,24);
+
 		JLabel1.setText("Name");
 		getContentPane().add(JLabel1);
 		JLabel1.setForeground(Color.black);
@@ -77,6 +70,7 @@ public class JDialog_AddPAcc extends JDialog
 		JTextField_BD.setBounds(84,204,156,20);
 		getContentPane().add(JTextField_EM);
 		JTextField_EM.setBounds(84,228,156,20);
+
 		JButton_OK.setText("OK");
 		JButton_OK.setActionCommand("OK");
 		getContentPane().add(JButton_OK);
@@ -85,6 +79,7 @@ public class JDialog_AddPAcc extends JDialog
 		JButton_Cancel.setActionCommand("Cancel");
 		getContentPane().add(JButton_Cancel);
 		JButton_Cancel.setBounds(156,264,84,24);
+
 		getContentPane().add(JTextField_ACNR);
 		JTextField_ACNR.setBounds(84,60,156,20);
 		JLabel8.setText("Acc Nr");
@@ -94,9 +89,6 @@ public class JDialog_AddPAcc extends JDialog
 		//}}
 	
 		//{{REGISTER_LISTENERS
-		SymMouse aSymMouse = new SymMouse();
-		JRadioButton_Chk.addMouseListener(aSymMouse);
-		JRadioButton_Sav.addMouseListener(aSymMouse);
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Cancel.addActionListener(lSymAction);
@@ -107,8 +99,6 @@ public class JDialog_AddPAcc extends JDialog
 
 
 	//{{DECLARE_CONTROLS
-	JRadioButton JRadioButton_Chk = new JRadioButton();
-	JRadioButton JRadioButton_Sav = new JRadioButton();
 	JLabel JLabel1 = new JLabel();
 	JLabel JLabel2 = new JLabel();
 	JLabel JLabel3 = new JLabel();
@@ -128,36 +118,6 @@ public class JDialog_AddPAcc extends JDialog
 	JTextField JTextField_ACNR = new JTextField();
 	JLabel JLabel8 = new JLabel();
 	//}}
-
-
-	class SymMouse extends java.awt.event.MouseAdapter
-	{
-		public void mouseClicked(java.awt.event.MouseEvent event)
-		{
-			Object object = event.getSource();
-			if (object == JRadioButton_Chk)
-				JRadioButtonChk_mouseClicked(event);
-			else if (object == JRadioButton_Sav)
-				JRadioButtonSav_mouseClicked(event);
-		}
-	}
-
-	void JRadioButtonChk_mouseClicked(java.awt.event.MouseEvent event)
-	{
-		//When Checking radio is clicked make this radio on 
-		//and make Saving account radio off
-		JRadioButton_Chk.setSelected(true);
-		JRadioButton_Sav.setSelected(false);
-	}
-
-	void JRadioButtonSav_mouseClicked(java.awt.event.MouseEvent event)
-	{
-		//When Saving radio is clicked make this radio on 
-		//and make Checking account radio off
-		JRadioButton_Chk.setSelected(false);
-		JRadioButton_Sav.setSelected(true);
-	 
-	}
 
 	class SymAction implements java.awt.event.ActionListener
 	{
@@ -179,17 +139,12 @@ public class JDialog_AddPAcc extends JDialog
        parentframe.city=JTextField_CT.getText();
        parentframe.zip=JTextField_ZIP.getText();
        parentframe.state=JTextField_ST.getText();
-       if (JRadioButton_Chk.isSelected())
-           parentframe.accountType="Ch";
-           else
-           parentframe.accountType="S";
-	   parentframe.newaccount=true;
+	   parentframe.newAccount=true;
        dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
 	{
-    //make this frame invisible if Cancel button is clicked
         dispose();
 	}
 }

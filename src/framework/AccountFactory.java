@@ -6,7 +6,7 @@ import framework.party.Party;
 
 public class AccountFactory {
 	
-	private AccountFactory() {}
+	protected AccountFactory() {}
 	private static AccountFactory accountFactory = null;
 	
 	public static AccountFactory getInstance() {
