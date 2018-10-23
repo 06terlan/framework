@@ -1,8 +1,15 @@
 package framework.ui;
 
+import framework.AccountFactory;
 import framework.FinCo;
+import framework.PartyFactory;
+import framework.account.Account;
+import framework.party.Company;
+import framework.party.Party;
+import framework.party.Person;
 
 import java.awt.*;
+import java.time.LocalDate;
 import javax.swing.*;
 
 
@@ -60,8 +67,6 @@ public class JDialog_AddCompAcc extends JDialog
 		JTextField_STR.setBounds(120,120,156,20);
 		getContentPane().add(JTextField_ZIP);
 		JTextField_ZIP.setBounds(120,192,156,20);
-		getContentPane().add(JTextField_NoOfEmp);
-		JTextField_NoOfEmp.setBounds(120,216,156,20);
 		getContentPane().add(JTextField_EM);
 		JTextField_EM.setBounds(120,240,156,20);
 
@@ -127,14 +132,24 @@ public class JDialog_AddCompAcc extends JDialog
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
-       parentframe.accountnr=JTextField_ACNR.getText();
-       parentframe.clientName=JTextField_NAME.getText();
-       parentframe.street=JTextField_STR.getText();
-       parentframe.city=JTextField_CT.getText();
-       parentframe.zip=JTextField_ZIP.getText();
-       parentframe.state=JTextField_ST.getText();
-	   parentframe.newAccount=true;
-	   dispose();
+		String accountNumber = JTextField_ACNR.getText();
+		String name = JTextField_NAME.getText();
+		String street = JTextField_STR.getText();
+		String city = JTextField_CT.getText();
+		String state = JTextField_ST.getText();
+		int zip = Integer.getInteger(JTextField_ZIP.getText());
+		String email = JTextField_EM.getText();
+
+		Company newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
+
+		if (!parentframe.parties.contains(newCompany)) {
+			parentframe.parties.add(newCompany);
+		}
+
+		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber);
+		parentframe.accounts.add(account);
+
+		dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)

@@ -2,16 +2,13 @@ package framework;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.JFrame;
 
 import framework.party.Party;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-
-    /****
-     * init variables in the object
-     ****/
     private List<Party> parties;
     private JFrame main;
     
@@ -30,7 +27,7 @@ public class FinCo extends JFrame {
             	main = new MainScreen();
             	main.setVisible(true);
             }
-      });
+    	});
     }
 	
 	public AccountFactory accountFactory() {

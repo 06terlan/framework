@@ -40,4 +40,14 @@ public class Party implements IParty {
     public List<Account> getAccounts(){
     	return accounts;
     }
+
+    public boolean equals(Party party) {
+        if (this.name.equals(party.name) &&
+        this.street.equals(party.street) &&
+        this.city.equals(party.city) &&
+        this.state.equals(party.state) &&
+        this.zip == party.zip &&
+        this.email.equals(party.email)) {return true;}
+        else return false;
+    }
 }
