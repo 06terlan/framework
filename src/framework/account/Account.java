@@ -12,6 +12,7 @@ public class Account implements IAccount {
 	
 	private String accountNumber;
 	private List<Entry> entries;
+	private double interestRate = 5;
 	private Party party;
 	
 	public Account(Party party, String accountNumber) {
@@ -29,6 +30,7 @@ public class Account implements IAccount {
     @Override
     public void depositMoney(double mooney) {
     	entries.add(new Entry(mooney, LocalDate.now(), "Deposit Money"));
+    	party.notifyOwner();
     }
 
     @Override
@@ -39,6 +41,12 @@ public class Account implements IAccount {
     @Override
     public void report() {
     	System.out.println(entries);
+    }
+    
+    @Override
+    public void addInterest() {
+    	double rate = getBalance() * interestRate / 100;
+    	if(rate > 0) entries.add(new Entry(rate, LocalDate.now(), "Interest Added"));
     }
 
 	public String getAccountNumber() {
