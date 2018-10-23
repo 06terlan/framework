@@ -18,6 +18,8 @@ public class AccountFactory {
 	}
 	
 	public IAccount createAccount(Party party, String accountNumber) {
-		return new Account(party, accountNumber);
+		Account account = new Account(party, accountNumber);
+		party.addAccount(account);
+		return account;
 	}
 }

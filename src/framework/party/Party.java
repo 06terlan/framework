@@ -34,11 +34,10 @@ public class Party implements IParty {
     }
 
     public void notifyOwner() {
-        this.sendEmail(email);
+        System.err.println("Message sent to the owner: " + name);
     }
-
-    protected void sendEmail(String receiver) {
-
+    
+    public List<Account> getAccounts(){
+    	return accounts;
     }
-
 }

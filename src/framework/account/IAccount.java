@@ -9,4 +9,5 @@ public interface IAccount {
     public void depositMoney(double mooney);
     public Party getOwner();
     public void report();
+    public void addInterest();
 }

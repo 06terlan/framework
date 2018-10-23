@@ -318,6 +318,11 @@ public class FinCo extends JFrame {
     public PartyFactory partyFactory() {
     	return PartyFactory.getInstance();
     }
+    
+    public void addInterest() {
+    	parties.stream().flatMap(p->p.getAccounts().stream())
+    		.forEach(a->a.addInterest());
+    }
 	
 //	public static void main(String[] args) {
 //    	FinCo finCo = new FinCo();
@@ -325,7 +330,8 @@ public class FinCo extends JFrame {
 //    	Person personTarlan = finCo.partyFactory().createPerson("Tarlan", "street", "city", "state", 12222, "email", LocalDate.of(1995, 3, 16));
 //    	Person personOljas = finCo.partyFactory().createPerson("Oljas", "street", "city", "state", 12223, "email", LocalDate.of(1994, 3, 16));
 //    	
-//    	Company company = finCo.partyFactory().createCompany("Company", "street", "city", "state", 1324, "email");
+//    	Company company = finCo.partyFactory().createCompany("Company1", "street", "city", "state", 1324, "email");
+//    	finCo.parties.add(company);
 //    	company.hirePerson(personTarlan);
 //    	company.hirePerson(personOljas);
 //    	
@@ -333,6 +339,9 @@ public class FinCo extends JFrame {
 //    	
 //    	IAccount account = finCo.accountFactory().createAccount(company, "1");
 //    	account.depositMoney(1000);
+//    	account.report();
+//    	
+//    	finCo.addInterest();
 //    	account.report();
 //    }
 }
