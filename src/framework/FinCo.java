@@ -1,13 +1,10 @@
 package framework;
 
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import framework.account.IAccount;
-import framework.party.Company;
+
+import framework.account.Account;
 import framework.party.Party;
-import framework.party.Person;
 import framework.ui.JDialog_AddCompAcc;
 import framework.ui.JDialog_AddPAcc;
 import framework.ui.JDialog_Deposit;
@@ -27,12 +24,14 @@ public class FinCo extends JFrame {
     public String accountnr, clientName, street, city, zip, state, accountType, amountDeposit;
     public boolean newAccount;
 
+    public List<Account> accounts = new ArrayList<>();
+    public List<Party> parties = new ArrayList<>();
+
     protected DefaultTableModel model;
     private JTable JTable1;
     private JScrollPane JScrollPane1;
     FinCo myframe;
     private Object rowdata[];
-    private List<Party> parties;
 
     public FinCo () {
     	parties = new ArrayList<>();
@@ -220,20 +219,6 @@ public class FinCo extends JFrame {
         JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
         pac.setVisible(true);
-
-        if (newAccount){
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "P";
-            rowdata[4] = accountType;
-            rowdata[5] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-            newAccount=false;
-        }
-
     }
 
     void JButtonCompAC_actionPerformed(ActionEvent event)
@@ -241,19 +226,6 @@ public class FinCo extends JFrame {
         JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
         pac.setVisible(true);
-
-        if (newAccount){
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "C";
-            rowdata[4] = accountType;
-            rowdata[5] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-            newAccount=false;
-        }
 
     }
 
