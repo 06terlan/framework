@@ -147,16 +147,13 @@ public class JDialog_AddCompAcc extends JDialog
 		}
 
 		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber);
-		newCompany.addAccount(account);
-		accounts.add(account);
-		rowdata = new Object[main.model.getColumnCount()];
-		rowdata[0] = account.getAccountNumber();
-		rowdata[1] = newCompany.getName();
-		rowdata[2] = newCompany.getCity();
-		rowdata[3] = newCompany.getState();
-		rowdata[4] = newCompany.getClass().getSimpleName();
-		rowdata[5] = "0";
-		main.model.addRow(rowdata);
+		if (!accounts.contains(account)) {
+			newCompany.addAccount(account);
+			accounts.add(account);
+			main.updateTable();
+		} else {
+			JOptionPane.showMessageDialog(this, "Cannot create account, account number already exists","Error!", JOptionPane.ERROR_MESSAGE);
+		}
 
 		dispose();
 	}

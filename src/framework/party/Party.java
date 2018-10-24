@@ -65,7 +65,15 @@ public class Party implements IParty {
     	return accounts;
     }
 
-    public boolean equals(Party party) {
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Account)) {
+            return false;
+        }
+        Party party = (Party) o;
         if (this.name.equals(party.name) &&
         this.street.equals(party.street) &&
         this.city.equals(party.city) &&

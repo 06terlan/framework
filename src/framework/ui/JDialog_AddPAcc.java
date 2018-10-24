@@ -158,8 +158,10 @@ public class JDialog_AddPAcc extends JDialog
         if (!accounts.contains(account)) {
             newPerson.addAccount(account);
             accounts.add(account);
+            main.updateTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Cannot create account, account number already exists","Error!", JOptionPane.ERROR_MESSAGE);
         }
-		main.updateTable();
 
         dispose();
 	}

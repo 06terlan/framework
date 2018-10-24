@@ -55,8 +55,16 @@ public class Account implements IAccount {
     	if(rate > 0) entries.add(new Entry(rate, LocalDate.now(), "Interest Added"));
     }
 
-    public boolean equals(Account account) {
-		return this.accountNumber.equals(account.getAccountNumber());
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Account)) {
+            return false;
+        }
+        Account account = (Account) o;
+        return this.accountNumber.equals(account.getAccountNumber());
 	}
 
 	public String getAccountNumber() {
