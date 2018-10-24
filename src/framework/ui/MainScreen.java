@@ -3,7 +3,6 @@ package framework.ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import framework.FinCo;
-import framework.party.Party;
+import framework.account.Account;
 
 public class MainScreen extends JFrame{
 	
@@ -30,13 +29,13 @@ public class MainScreen extends JFrame{
     private JScrollPane JScrollPane1;
     private JTable JTable1;
     protected DefaultTableModel model;
-    protected List<Party> parties;
+    public FinCo finCo;
     private Object rowdata[];
     public boolean newAccount;
     
 	public MainScreen(FinCo finCo) {
 		myframe = this;
-		this.parties = finCo.getParties();
+		this.finCo = finCo;
 		setTitle(getTitle());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout(0,0));
@@ -175,97 +174,74 @@ public class MainScreen extends JFrame{
 
     public void JButtonPerAC_actionPerformed(ActionEvent event)
     {
-//        JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
-//        pac.setBounds(450, 20, 300, 330);
-//        pac.setVisible(true);
-//
-//        if (newAccount){
-//            // add row to table
-//            rowdata[0] = accountnr;
-//            rowdata[1] = clientName;
-//            rowdata[2] = city;
-//            rowdata[3] = "P";
-//            rowdata[4] = accountType;
-//            rowdata[5] = "0";
-//            model.addRow(rowdata);
-//            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-//            newAccount=false;
-//        }
+        JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
+        pac.setBounds(450, 20, 300, 330);
+        pac.setVisible(true);
 
+        JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
     }
 
     void JButtonCompAC_actionPerformed(ActionEvent event)
     {
-        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(parties, model);
+        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(MainScreen.this);
         pac.setBounds(450, 20, 300, 330);
         pac.setVisible(true);
 
-        if (newAccount){
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "C";
-            rowdata[4] = accountType;
-            rowdata[5] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-            newAccount=false;
-        }
-
+        JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
     }
 
     void JButtonDeposit_actionPerformed(ActionEvent event)
     {
-        // get selected name
-//        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-//        if (selection >=0){
-//            String accnr = (String)model.getValueAt(selection, 0);
-//
-//            //Show the dialog for adding deposit amount for the current mane
-//            JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr);
-//            dep.setBounds(430, 15, 275, 140);
-//            dep.show();
-//
-//            // compute new amount
-//            long deposit = Long.parseLong(amountDeposit);
-//            String samount = (String)model.getValueAt(selection, 5);
-//            long currentamount = Long.parseLong(samount);
-//            long newamount=currentamount+deposit;
-//            model.setValueAt(String.valueOf(newamount),selection, 5);
-//        }
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >= 0){
+            String accountNumber = (String) model.getValueAt(selection, 0);
 
+            //Show the dialog for adding deposit amount for the current mane
+            JDialog_Deposit dep = new JDialog_Deposit(this, finCo.getAccountByNumber(accountNumber));
+            dep.setBounds(430, 15, 275, 140);
+            dep.setVisible(true);
 
+            // compute new amount
+            this.updateTable();
+        }
     }
 
     void JButtonWithdraw_actionPerformed(ActionEvent event)
     {
         // get selected name
-//        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-//        if (selection >=0){
-//            String accnr = (String)model.getValueAt(selection, 0);
-//
-//            //Show the dialog for adding withdraw amount for the current mane
-//            JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr);
-//            wd.setBounds(430, 15, 275, 140);
-//            wd.show();
-//
-//            // compute new amount
-//            long deposit = Long.parseLong(amountDeposit);
-//            String samount = (String)model.getValueAt(selection, 5);
-//            long currentamount = Long.parseLong(samount);
-//            long newamount=currentamount-deposit;
-//            model.setValueAt(String.valueOf(newamount),selection, 5);
-//            if (newamount <0){
-//                JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-//            }
-//        }
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >=0){
+            String accountNumber = (String) model.getValueAt(selection, 0);
+
+            JDialog_Withdraw wd = new JDialog_Withdraw(this, finCo.getAccountByNumber(accountNumber));
+            wd.setBounds(430, 15, 275, 140);
+            wd.setVisible(true);
+
+            // compute new amount
+            this.updateTable();
+        }
 
 
     }
 
     void JButtonAddinterest_actionPerformed(ActionEvent event)
     {
+        finCo.addInterest();
         JOptionPane.showMessageDialog(JButton_AddInterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void updateTable() {
+        model.setRowCount(0);
+
+        for (Account account : finCo.getAccounts()) {
+            rowdata = new Object[model.getColumnCount()];
+            rowdata[0] = account.getAccountNumber();
+            rowdata[1] = account.getOwner().getName();
+            rowdata[2] = account.getOwner().getCity();
+            rowdata[3] = account.getOwner().getState();
+            rowdata[4] = account.getOwner().getClass().getSimpleName();
+            rowdata[5] = account.getBalance();
+            model.addRow(rowdata);
+        }
     }
 }

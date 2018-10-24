@@ -1,32 +1,23 @@
 package framework.ui;
 
 import framework.AccountFactory;
-import framework.FinCo;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Company;
 import framework.party.Party;
 
 import java.awt.*;
-import java.util.*;
-import java.time.LocalDate;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 
 public class JDialog_AddCompAcc extends JDialog
 {
-    private FinCo parentframe;
-    protected List<Party> parties;
-    protected DefaultTableModel model;
+    private MainScreen main;
 	private Object rowdata[];
 
-
-	public JDialog_AddCompAcc(List<Party> parties, DefaultTableModel model)
+	public JDialog_AddCompAcc(MainScreen main)
 	{
-		this.parties = parties;
-		this.model = model;
+		this.main = main;
 		//{{ INIT_CONTROLS 
 		setTitle("Add compamy account");
 		setModal(true);
@@ -113,7 +104,6 @@ public class JDialog_AddCompAcc extends JDialog
 	JTextField JTextField_ST = new JTextField();
 	JTextField JTextField_STR = new JTextField();
 	JTextField JTextField_ZIP = new JTextField();
-	JTextField JTextField_NoOfEmp = new JTextField();
 	JTextField JTextField_EM = new JTextField();
 	JButton JButton_OK = new JButton();
 	JButton JButton_Calcel = new JButton();
@@ -146,6 +136,9 @@ public class JDialog_AddCompAcc extends JDialog
 
 		Party newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
 
+		List<Party> parties = main.finCo.getParties();
+		List<Account> accounts = main.finCo.getAccounts();
+
 		if (!parties.contains(newCompany)) {
 			parties.add(newCompany);
 		} else {
@@ -155,14 +148,15 @@ public class JDialog_AddCompAcc extends JDialog
 
 		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber);
 		newCompany.addAccount(account);
-		rowdata = new Object[model.getColumnCount()];
+		accounts.add(account);
+		rowdata = new Object[main.model.getColumnCount()];
 		rowdata[0] = account.getAccountNumber();
 		rowdata[1] = newCompany.getName();
 		rowdata[2] = newCompany.getCity();
 		rowdata[3] = newCompany.getState();
-		rowdata[4] = "Company";
+		rowdata[4] = newCompany.getClass().getSimpleName();
 		rowdata[5] = "0";
-		model.addRow(rowdata);
+		main.model.addRow(rowdata);
 
 		dispose();
 	}
@@ -170,6 +164,5 @@ public class JDialog_AddCompAcc extends JDialog
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
 	{
 		dispose();
-			 
 	}
 }
