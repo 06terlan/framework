@@ -13,6 +13,10 @@ public class Account implements IAccount {
 	private String accountNumber;
 	private List<Entry> entries;
 	private double interestRate = 5;
+	public double getInterestRate() {
+		return interestRate;
+	}
+
 	private Party party;
 	
 	public Account(Party party, String accountNumber) {

@@ -225,7 +225,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
     	   account = CCAccountFactory.createBronzeCard(newParty, ccnumber, LocalDate.parse(expdate));
        }
        
-       newParty.addAccount(account);
+       //newParty.addAccount(account);
        cardFrm.getFinCo().getAccounts().add(account);
 	   
        cardFrm.updateTable();
