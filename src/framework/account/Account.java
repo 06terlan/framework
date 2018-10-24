@@ -12,8 +12,9 @@ public class Account implements IAccount {
 	
 	private String accountNumber;
 	private List<Entry> entries;
-	private double interestRate = 5;
+	private double interestRate = 0.05;
 	private Party party;
+	private String type = "Simple";
 	
 	public Account(Party party, String accountNumber) {
 		this.accountNumber = accountNumber;
@@ -25,7 +26,15 @@ public class Account implements IAccount {
     public double getBalance() {
         return entries.stream().mapToDouble(e->e.getAmount()).sum();
     }
-    
+
+    protected double getInterestRate() {
+		return this.interestRate;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
     public List<Entry> getEntries(){
     	return entries;
     }
@@ -49,8 +58,8 @@ public class Account implements IAccount {
     }
     
     public void addInterest() {
-    	double rate = getBalance() * interestRate / 100;
-    	if(rate > 0) entries.add(new Entry(rate, LocalDate.now(), "Interest Added"));
+    	double rate = getBalance() * getInterestRate();
+    	if (rate > 0) this.getEntries().add(new Entry(rate, LocalDate.now(), "Interest Added"));
     }
 
     @Override

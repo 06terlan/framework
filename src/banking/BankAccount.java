@@ -5,7 +5,6 @@ import framework.party.Party;
 
 public abstract class BankAccount extends Account {
 
-
     private double interest;
 
     public BankAccount(Party party, String accountNumber, double interest) {
@@ -13,6 +12,8 @@ public abstract class BankAccount extends Account {
         this.interest = interest;
     }
 
-    public abstract void addInterest();
+    public BankAccount(Party party, String accountNumber) {
+        super(party, accountNumber);
+    }
 
 }

@@ -19,20 +19,21 @@ public class MainScreen extends JFrame{
 	
 	MainScreen myframe;
 	public String accountnr, clientName, street, city, zip, state, accountType, amountDeposit;
-	JPanel JPanel1 = new JPanel();
-    JButton JButton_PerAC = new JButton();
-    JButton JButton_CompAC = new JButton();
-    JButton JButton_Deposit = new JButton();
-    JButton JButton_Withdraw = new JButton();
-    JButton JButton_AddInterest = new JButton();
-    JButton JButton_Exit = new JButton();
+	protected JPanel JPanel1 = new JPanel();
+    protected JButton JButton_PerAC = new JButton();
+    protected JButton JButton_CompAC = new JButton();
+    protected JButton JButton_Deposit = new JButton();
+    protected JButton JButton_Withdraw = new JButton();
+    protected JButton JButton_AddInterest = new JButton();
+    protected JButton JButton_Exit = new JButton();
     private JScrollPane JScrollPane1;
     private JTable JTable1;
     protected DefaultTableModel model;
     public FinCo finCo;
     private Object rowdata[];
     public boolean newAccount;
-    
+
+    public MainScreen(){}
 	public MainScreen(FinCo finCo) {
 		myframe = this;
 		this.finCo = finCo;
@@ -112,7 +113,7 @@ public class MainScreen extends JFrame{
         return model;
     }
     
-    class SymWindow extends java.awt.event.WindowAdapter
+    public class SymWindow extends java.awt.event.WindowAdapter
     {
         public void windowClosing(WindowEvent event)
         {
@@ -122,19 +123,19 @@ public class MainScreen extends JFrame{
         }
     }
     
-    void FinCo_windowClosing(WindowEvent event)
+    protected void FinCo_windowClosing(WindowEvent event)
     {
         FinCo_windowClosing_Interaction1(event);
     }
-    
-    void FinCo_windowClosing_Interaction1(WindowEvent event) {
+
+    protected void FinCo_windowClosing_Interaction1(WindowEvent event) {
         try {
             this.exitApplication();
         } catch (Exception e) {
         }
     }
-    
-    void exitApplication()
+
+    protected void exitApplication()
     {
         try {
             this.setVisible(false);    // hide the Frame
@@ -144,7 +145,7 @@ public class MainScreen extends JFrame{
         }
     }
     
-    class SymAction implements java.awt.event.ActionListener
+    public class SymAction implements java.awt.event.ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {
@@ -165,14 +166,14 @@ public class MainScreen extends JFrame{
         }
     }
     
-  //When the Exit button is pressed this code gets executed
+    //When the Exit button is pressed this code gets executed
     //this will exit from the system
-    void JButtonExit_actionPerformed(ActionEvent event)
+    protected void JButtonExit_actionPerformed(ActionEvent event)
     {
         System.exit(0);
     }
 
-    public void JButtonPerAC_actionPerformed(ActionEvent event)
+    protected void JButtonPerAC_actionPerformed(ActionEvent event)
     {
         JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
@@ -181,16 +182,16 @@ public class MainScreen extends JFrame{
         JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
     }
 
-    void JButtonCompAC_actionPerformed(ActionEvent event)
+    protected void JButtonCompAC_actionPerformed(ActionEvent event)
     {
-        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(MainScreen.this);
+        JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
         pac.setVisible(true);
 
         JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
     }
 
-    void JButtonDeposit_actionPerformed(ActionEvent event)
+    protected void JButtonDeposit_actionPerformed(ActionEvent event)
     {
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
@@ -206,7 +207,7 @@ public class MainScreen extends JFrame{
         }
     }
 
-    void JButtonWithdraw_actionPerformed(ActionEvent event)
+    protected void JButtonWithdraw_actionPerformed(ActionEvent event)
     {
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -224,9 +225,10 @@ public class MainScreen extends JFrame{
 
     }
 
-    void JButtonAddinterest_actionPerformed(ActionEvent event)
+    protected void JButtonAddinterest_actionPerformed(ActionEvent event)
     {
         finCo.addInterest();
+        this.updateTable();
         JOptionPane.showMessageDialog(JButton_AddInterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
     }
 
