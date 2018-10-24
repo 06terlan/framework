@@ -5,15 +5,18 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import framework.account.Account;
 import framework.party.Party;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-    protected List<Party> parties;
-    protected JFrame main;
+    private List<Party> parties;
+    private List<Account> accounts;
+    private JFrame main;
     
     public FinCo () {
     	parties = new ArrayList<>();
+    	accounts = new ArrayList<>();
     }
 
     public static void main(String[] args) { 
@@ -37,5 +40,18 @@ public class FinCo extends JFrame {
     
     public List<Party> getParties(){
     	return parties;
+    }
+
+    public List<Account> getAccounts(){
+        return accounts;
+    }
+
+    public Account getAccountByNumber(String number) {
+        for(Account account : accounts) {
+            if (account.getAccountNumber().equals(number)) {
+                return account;
+            }
+        }
+        return null;
     }
 }

@@ -28,10 +28,16 @@ public class Account implements IAccount {
     }
 
     @Override
-    public void depositMoney(double mooney) {
-    	entries.add(new Entry(mooney, LocalDate.now(), "Deposit Money"));
+    public void depositMoney(double money) {
+    	entries.add(new Entry(money, LocalDate.now(), "Deposit Money"));
     	party.notifyOwner();
     }
+
+	@Override
+	public void withdrawMoney(double money) {
+		entries.add(new Entry(-money, LocalDate.now(), "Withdraw Money"));
+		party.notifyOwner();
+	}
 
     @Override
     public Party getOwner() {
@@ -48,6 +54,18 @@ public class Account implements IAccount {
     	double rate = getBalance() * interestRate / 100;
     	if(rate > 0) entries.add(new Entry(rate, LocalDate.now(), "Interest Added"));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Account)) {
+            return false;
+        }
+        Account account = (Account) o;
+        return this.accountNumber.equals(account.getAccountNumber());
+	}
 
 	public String getAccountNumber() {
 		return accountNumber;
