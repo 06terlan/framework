@@ -9,8 +9,8 @@ import framework.party.Party;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-    private List<Party> parties;
-    private JFrame main;
+    protected List<Party> parties;
+    protected JFrame main;
     
     public FinCo () {
     	parties = new ArrayList<>();
@@ -28,14 +28,6 @@ public class FinCo extends JFrame {
             	main.setVisible(true);
             }
     	});
-    }
-	
-	public AccountFactory accountFactory() {
-    	return AccountFactory.getInstance();
-    }
-    
-    public PartyFactory partyFactory() {
-    	return PartyFactory.getInstance();
     }
     
     public void addInterest() {
