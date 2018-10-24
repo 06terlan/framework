@@ -37,7 +37,7 @@ public class JDialogGenBill extends JDialog
 
 		String billstring = "";
 		double previousBalance, totalCharges, totalCredits;
-		for(Party party: bankFrm.getFinCo().getParties()) {
+		for(Party party: bankFrm.getBanking().getParties()) {
 			billstring += "Name= "+party.getName()+"\r\n";
 			previousBalance = 0; totalCharges = 0; totalCredits = 0;
 			for(Account account: party.getAccounts()) {

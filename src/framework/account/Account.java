@@ -14,7 +14,7 @@ public class Account implements IAccount {
 	private String accountNumber;
 	private List<Entry> entries;
 	private double interestRate = 0.05;
-	private Party party;
+	protected Party party;
 	private String type = "Simple";
 
 	public Account(Party party, String accountNumber) {
@@ -28,7 +28,7 @@ public class Account implements IAccount {
         return entries.stream().mapToDouble(e->e.getAmount()).sum();
     }
 
-    protected double getInterestRate() {
+    public double getInterestRate() {
 		return this.interestRate;
 	}
 
