@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Banking extends FinCo {
 
-    protected List<BankAccount> accounts;
+    private List<BankAccount> accounts;
 
     public Banking () {
         super();
@@ -22,6 +22,10 @@ public class Banking extends FinCo {
                 main.setVisible(true);
             }
         });
+    }
+
+    public List<BankAccount> getBankingAccounts(){
+        return this.accounts;
     }
 
     public static void main(String[] args) {

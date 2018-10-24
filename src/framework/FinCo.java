@@ -10,8 +10,8 @@ import framework.party.Party;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-    protected List<Party> parties;
-    protected List<Account> accounts;
+    private List<Party> parties;
+    private List<Account> accounts;
     protected JFrame main;
     
     public FinCo () {

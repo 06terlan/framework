@@ -144,7 +144,7 @@ public class BankFrm extends MainScreen
     @Override
     public void updateTable() {
         model.setRowCount(0);
-        for (BankAccount account : banking.getAccounts()) {
+        for (BankAccount account : banking.getBankingAccounts()) {
             rowdata = new Object[model.getColumnCount()];
 			rowdata[0] = account.getAccountNumber();
             rowdata[1] = account.getOwner().getName();
