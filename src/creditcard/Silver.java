@@ -11,4 +11,8 @@ public class Silver extends CCAccount {
         super(party, accountNumber, expDate);
     }
 
+	@Override
+	public String getType() {
+		return "Silver";
+	}
 }

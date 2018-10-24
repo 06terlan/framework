@@ -10,4 +10,9 @@ public class Bronze extends CCAccount {
     public Bronze(Party party, String accountNumber, LocalDate expDate) {
         super(party, accountNumber, expDate);
     }
+    
+    @Override
+	public String getType() {
+		return "Bronze";
+	}
 }

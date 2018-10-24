@@ -226,13 +226,14 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
        }
        
        newParty.addAccount(account);
+       cardFrm.getFinCo().getAccounts().add(account);
 	   
+       cardFrm.updateTable();
        dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
 	{
-    //make this frame invisible if Cancel button is clicked
         dispose();
 	}
 }

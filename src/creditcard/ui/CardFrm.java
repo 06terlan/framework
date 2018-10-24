@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import creditcard.CCAccount;
 import framework.FinCo;
+import framework.account.Account;
 import framework.party.Party;
 
 import javax.swing.*;
@@ -58,7 +60,6 @@ public class CardFrm extends javax.swing.JFrame
         model.addColumn("Exp date");
         model.addColumn("Type");
         model.addColumn("Balance");
-        rowdata = new Object[7];
         
         
         JPanel1.add(JScrollPane1);
@@ -166,6 +167,19 @@ public class CardFrm extends javax.swing.JFrame
 	{
 		System.exit(0);
 	}
+    
+    public void updateTable() {
+        model.setRowCount(0);
+        for (Account account : finCo.getAccounts()) {
+            rowdata = new Object[model.getColumnCount()];
+            rowdata[0] = account.getOwner().getName();
+            rowdata[1] = account.getAccountNumber();
+            rowdata[2] = ((CCAccount)account).getExpDate();
+            rowdata[3] = ((CCAccount)account).getType();
+            rowdata[4] = account.getBalance();
+            model.addRow(rowdata);
+        }
+    }
 
 	void JButtonNewCCAC_actionPerformed(java.awt.event.ActionEvent event)
 	{
@@ -176,7 +190,7 @@ public class CardFrm extends javax.swing.JFrame
 
 	void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event)
 	{
-		JDialogGenBill billFrm = new JDialogGenBill();
+		JDialogGenBill billFrm = new JDialogGenBill(this);
 		billFrm.setBounds(450, 20, 400, 350);
 		billFrm.show();
 	    
@@ -185,50 +199,24 @@ public class CardFrm extends javax.swing.JFrame
 	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event)
 	{
 	    // get selected name
-//        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-//        if (selection >=0){
-//            String name = (String)model.getValueAt(selection, 0);
-//    	    
-//		    //Show the dialog for adding deposit amount for the current mane
-//		    JDialog_Deposit dep = new JDialog_Deposit(thisframe,name);
-//		    dep.setBounds(430, 15, 275, 140);
-//		    dep.show();
-//    		
-//		    // compute new amount
-//            long deposit = Long.parseLong(amountDeposit);
-//            String samount = (String)model.getValueAt(selection, 4);
-//            long currentamount = Long.parseLong(samount);
-//		    long newamount=currentamount+deposit;
-//		    model.setValueAt(String.valueOf(newamount),selection, 4);
-//		}
-		
-		
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >=0){
+		    //Show the dialog for adding deposit amount for the current mane
+		    JDialog_Deposit dep = new JDialog_Deposit(this, finCo.getAccounts().get(selection));
+		    dep.setBounds(430, 15, 275, 140);
+		    dep.show();
+		}
 	}
 
 	void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event)
 	{
 	    // get selected name
-//        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-//        if (selection >=0){
-//            String name = (String)model.getValueAt(selection, 0);
-//
-//		    //Show the dialog for adding withdraw amount for the current mane
-//		    JDialog_Withdraw wd = new JDialog_Withdraw(thisframe,name);
-//		    wd.setBounds(430, 15, 275, 140);
-//		    wd.show();
-//    		
-//		    // compute new amount
-//            long deposit = Long.parseLong(amountDeposit);
-//            String samount = (String)model.getValueAt(selection, 4);
-//            long currentamount = Long.parseLong(samount);
-//		    long newamount=currentamount-deposit;
-//		    model.setValueAt(String.valueOf(newamount),selection, 4);
-//		    if (newamount <0){
-//		       JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-//		    }
-//		}
-		
-		
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >=0){
+		    JDialog_Withdraw wd = new JDialog_Withdraw(this, finCo.getAccounts().get(selection));
+		    wd.setBounds(430, 15, 275, 140);
+		    wd.show();
+		}
 	}
 	
 }

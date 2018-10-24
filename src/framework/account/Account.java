@@ -22,34 +22,32 @@ public class Account implements IAccount {
 		entries = new ArrayList<>();
 	}
 	
-    @Override
     public double getBalance() {
         return entries.stream().mapToDouble(e->e.getAmount()).sum();
     }
+    
+    public List<Entry> getEntries(){
+    	return entries;
+    }
 
-    @Override
     public void depositMoney(double money) {
     	entries.add(new Entry(money, LocalDate.now(), "Deposit Money"));
     	party.notifyOwner();
     }
 
-	@Override
 	public void withdrawMoney(double money) {
 		entries.add(new Entry(-money, LocalDate.now(), "Withdraw Money"));
 		party.notifyOwner();
 	}
 
-    @Override
     public Party getOwner() {
         return party;
     }
     
-    @Override
     public void report() {
     	System.out.println(entries);
     }
     
-    @Override
     public void addInterest() {
     	double rate = getBalance() * interestRate / 100;
     	if(rate > 0) entries.add(new Entry(rate, LocalDate.now(), "Interest Added"));

@@ -10,4 +10,9 @@ public class Gold extends CCAccount {
     public Gold(Party party, String accountNumber, LocalDate expDate) {
         super(party, accountNumber, expDate);
     }
+
+	@Override
+	public String getType() {
+		return "Gold";
+	}
 }

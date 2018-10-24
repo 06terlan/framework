@@ -10,9 +10,9 @@ import framework.party.Party;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-    private List<Party> parties;
-    private List<Account> accounts;
-    private JFrame main;
+    protected List<Party> parties;
+    protected List<Account> accounts;
+    protected JFrame main;
     
     public FinCo () {
     	parties = new ArrayList<>();
