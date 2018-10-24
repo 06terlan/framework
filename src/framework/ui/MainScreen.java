@@ -34,9 +34,9 @@ public class MainScreen extends JFrame{
     private Object rowdata[];
     public boolean newAccount;
     
-	public MainScreen(List<Party> parties) {
+	public MainScreen(FinCo finCo) {
 		myframe = this;
-		this.parties = parties;
+		this.parties = finCo.getParties();
 		setTitle(getTitle());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout(0,0));

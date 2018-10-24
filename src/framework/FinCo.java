@@ -24,7 +24,7 @@ public class FinCo extends JFrame {
     public void run() {
     	java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	main = new MainScreen(parties);
+            	main = new MainScreen(FinCo.this);
             	main.setVisible(true);
             }
     	});
@@ -41,5 +41,9 @@ public class FinCo extends JFrame {
     public void addInterest() {
     	parties.stream().flatMap(p->p.getAccounts().stream())
     		.forEach(a->a.addInterest());
+    }
+    
+    public List<Party> getParties(){
+    	return parties;
     }
 }
