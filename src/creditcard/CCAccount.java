@@ -7,7 +7,6 @@ import framework.party.Party;
 
 public abstract class CCAccount extends Account {
 	private LocalDate expDate;
-	private double mP;
 	
     public LocalDate getExpDate() {
 		return expDate;
@@ -19,4 +18,6 @@ public abstract class CCAccount extends Account {
     }
 	
 	public abstract String getType();
+	
+	public abstract double getMP();
 }

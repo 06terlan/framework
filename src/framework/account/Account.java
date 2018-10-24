@@ -6,6 +6,7 @@ import java.util.List;
 
 import framework.account.entry.Entry;
 import framework.party.Party;
+import framework.rules.NotifyRule;
 
 public class Account implements IAccount {
 	
@@ -15,7 +16,7 @@ public class Account implements IAccount {
 	private double interestRate = 0.05;
 	private Party party;
 	private String type = "Simple";
-	
+
 	public Account(Party party, String accountNumber) {
 		this.accountNumber = accountNumber;
 		this.party = party;
@@ -41,12 +42,18 @@ public class Account implements IAccount {
 
     public void depositMoney(double money) {
     	entries.add(new Entry(money, LocalDate.now(), "Deposit Money"));
-    	party.notifyOwner();
+
+    	sendNotification();
     }
 
 	public void withdrawMoney(double money) {
 		entries.add(new Entry(-money, LocalDate.now(), "Withdraw Money"));
-		party.notifyOwner();
+
+		sendNotification();
+	}
+
+	public void sendNotification() {
+		if(new NotifyRule().chech(this)) party.notifyOwner();
 	}
 
     public Party getOwner() {

@@ -81,6 +81,9 @@ public class CardFrm extends javax.swing.JFrame
 		JButton_Withdraw.setText("Charge");
 		JPanel1.add(JButton_Withdraw);
 		JButton_Withdraw.setBounds(468,164,96,33);
+		JButton_AddInterest.setText("Add Interest");
+		JPanel1.add(JButton_AddInterest);
+		JButton_AddInterest.setBounds(468,204,96,33);
 		JButton_Exit.setText("Exit");
 		JPanel1.add(JButton_Exit);
 		JButton_Exit.setBounds(468,248,96,31);
@@ -96,7 +99,7 @@ public class CardFrm extends javax.swing.JFrame
 		JButton_GenBill.addActionListener(lSymAction);
 		JButton_Deposit.addActionListener(lSymAction);
 		JButton_Withdraw.addActionListener(lSymAction);
-		
+		JButton_AddInterest.addActionListener(lSymAction);
 	}
 
 
@@ -105,6 +108,7 @@ public class CardFrm extends javax.swing.JFrame
 	javax.swing.JButton JButton_GenBill = new javax.swing.JButton();
 	javax.swing.JButton JButton_Deposit = new javax.swing.JButton();
 	javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
+	javax.swing.JButton JButton_AddInterest = new javax.swing.JButton();
 	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
 
 
@@ -157,7 +161,8 @@ public class CardFrm extends javax.swing.JFrame
 				JButtonDeposit_actionPerformed(event);
 			else if (object == JButton_Withdraw)
 				JButtonWithdraw_actionPerformed(event);
-			
+			else if (object == JButton_AddInterest)
+				JButtonAddInterest_actionPerformed(event);
 		}
 	}
     
@@ -181,6 +186,12 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
+    void JButtonAddInterest_actionPerformed(java.awt.event.ActionEvent event)
+	{
+		finCo.addInterest();
+		updateTable();
+    }
+    
 	void JButtonNewCCAC_actionPerformed(java.awt.event.ActionEvent event)
 	{
 		JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(this);
