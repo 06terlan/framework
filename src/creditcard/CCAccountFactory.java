@@ -3,28 +3,44 @@ package creditcard;
 import java.time.LocalDate;
 
 import framework.AccountFactory;
+import framework.IAccountFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
-public class CCAccountFactory extends AccountFactory {
+public class CCAccountFactory implements IAccountFactory {
 
-    private CCAccountFactory() {}
+	protected CCAccountFactory() {}
+	private static CCAccountFactory accountFactory = null;
 	
-	public static Account createBronzeCard(Party party, String accountNumber, LocalDate expDate) {
-		Account account = new Bronze(party, accountNumber, expDate);
-		party.addAccount(account);
+	public static CCAccountFactory getInstance() {
+		if(accountFactory == null) {
+			accountFactory = new CCAccountFactory();
+		}
+		
+		return accountFactory;
+	}
+
+	public Account createAccount(Custormer party, String accountNumber, LocalDate expDate, String type) {
+		Account account;
+		
+		if(type.equals("BronzeCard")) {
+			account = new Bronze(party, accountNumber, expDate);
+			party.addAccount(account);	
+		}
+		else if(type.equals("SilverCard")){
+			account = new Silver(party, accountNumber, expDate);
+			party.addAccount(account);
+		}
+		else {
+			account = new Gold(party, accountNumber, expDate);
+			party.addAccount(account);
+		}
+		
 		return account;
 	}
-	
-	public static Account createSilverCard(Party party, String accountNumber, LocalDate expDate) {
-		Account account = new Silver(party, accountNumber, expDate);
-		party.addAccount(account);
-		return account;
-	}
-	
-	public static Account createGoldCard(Party party, String accountNumber, LocalDate expDate) {
-		Account account = new Gold(party, accountNumber, expDate);
-		party.addAccount(account);
-		return account;
+
+	@Override
+	public Account createAccount(Custormer party, String accountNumber, String type) {
+		return null;
 	}
 }

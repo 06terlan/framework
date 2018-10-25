@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import framework.FinCo;
 import framework.account.Account;
+import framework.party.Custormer;
 
 public class MainScreen extends JFrame{
 	
@@ -238,10 +239,10 @@ public class MainScreen extends JFrame{
         for (Account account : finCo.getAccounts()) {
             rowdata = new Object[model.getColumnCount()];
             rowdata[0] = account.getAccountNumber();
-            rowdata[1] = account.getOwner().getName();
-            rowdata[2] = account.getOwner().getCity();
-            rowdata[3] = account.getOwner().getState();
-            rowdata[4] = account.getOwner().getClass().getSimpleName();
+            rowdata[1] = ((Custormer)account.getOwner()).getName();
+            rowdata[2] = ((Custormer)account.getOwner()).getCity();
+            rowdata[3] = ((Custormer)account.getOwner()).getState();
+            rowdata[4] = ((Custormer)account.getOwner()).getClass().getSimpleName();
             rowdata[5] = account.getBalance();
             model.addRow(rowdata);
         }

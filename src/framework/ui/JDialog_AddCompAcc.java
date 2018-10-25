@@ -3,7 +3,7 @@ package framework.ui;
 import framework.AccountFactory;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 import java.awt.*;
 import java.util.List;
@@ -129,9 +129,9 @@ public class JDialog_AddCompAcc extends JDialog
 		int zip = Integer.parseInt(JTextField_ZIP.getText());
 		String email = JTextField_EM.getText();
 
-		Party newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
+		Custormer newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
 
-		List<Party> parties = main.finCo.getParties();
+		List<Custormer> parties = main.finCo.getParties();
 		List<Account> accounts = main.finCo.getAccounts();
 
 		if (!parties.contains(newCompany)) {
@@ -141,7 +141,7 @@ public class JDialog_AddCompAcc extends JDialog
 			newCompany = parties.get(index);
 		}
 
-		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber);
+		Account account = AccountFactory.getInstance().createAccount(newCompany, accountNumber, "");
 		if (!accounts.contains(account)) {
 			newCompany.addAccount(account);
 			accounts.add(account);

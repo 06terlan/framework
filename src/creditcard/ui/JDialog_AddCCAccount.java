@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import creditcard.CCAccountFactory;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog
 {
@@ -202,8 +202,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
        expdate=JTextField_ExpDate.getText();
        email=JTextField_Email.getText();
        
-       Party newParty = PartyFactory.createCompany(clientName, street, city, state, zip, email);
-       List<Party> parties = cardFrm.getFinCo().getParties();
+       Custormer newParty = PartyFactory.createCompany(clientName, street, city, state, zip, email);
+       List<Custormer> parties = cardFrm.getFinCo().getParties();
        Account account = null;
        
        if (!parties.contains(newParty)) {
@@ -215,14 +215,14 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
        
        if (JRadioButton_Gold.isSelected()) {
     	   accountType="Gold";
-    	   account = CCAccountFactory.createGoldCard(newParty, ccnumber, LocalDate.parse(expdate));
+    	   account = CCAccountFactory.getInstance().createAccount(newParty, ccnumber, LocalDate.parse(expdate), "GoldCard");
        }
        else if(JRadioButton_Silver.isSelected()) {
     	   accountType="Silver";
-    	   account = CCAccountFactory.createSilverCard(newParty, ccnumber, LocalDate.parse(expdate));
+    	   account = CCAccountFactory.getInstance().createAccount(newParty, ccnumber, LocalDate.parse(expdate), "SilverCard");
        }else {
     	   accountType="Bronze";
-    	   account = CCAccountFactory.createBronzeCard(newParty, ccnumber, LocalDate.parse(expdate));
+    	   account = CCAccountFactory.getInstance().createAccount(newParty, ccnumber, LocalDate.parse(expdate), "BronzeCard");
        }
        
        //newParty.addAccount(account);

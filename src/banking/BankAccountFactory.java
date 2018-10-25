@@ -1,9 +1,10 @@
 package banking;
 
-import framework.AccountFactory;
-import framework.party.Party;
+import framework.IAccountFactory;
+import framework.account.Account;
+import framework.party.Custormer;
 
-public class BankAccountFactory extends AccountFactory {
+public class BankAccountFactory implements IAccountFactory {
     protected BankAccountFactory() {}
     private static BankAccountFactory bankAccountFactory = null;
 
@@ -14,15 +15,19 @@ public class BankAccountFactory extends AccountFactory {
         return bankAccountFactory;
     }
 
-    public BankAccount createCheckingAccount(Party party, String accountNumber) {
-        BankAccount account = new CheckingAccount(party, accountNumber);
-        party.addAccount(account);
-        return account;
-    }
-
-    public BankAccount createSavingAccount(Party party, String accountNumber) {
-        BankAccount account = new SavingAccount(party, accountNumber);
-        party.addAccount(account);
-        return account;
-    }
+	@Override
+	public Account createAccount(Custormer party, String accountNumber, String type) {
+		BankAccount account;
+		
+		if(type.equals("CheckingAccount")) {
+			account = new CheckingAccount(party, accountNumber);
+	        party.addAccount(account);
+		}
+		else {
+			account = new SavingAccount(party, accountNumber);
+	        party.addAccount(account);
+		}
+        
+		return account;
+	}
 }

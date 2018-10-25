@@ -1,11 +1,11 @@
 package framework.party;
 
-import framework.account.Account;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Party implements IParty {
+import framework.account.IAccount;
+
+public class Custormer implements ICustomer {
 
     private String name;
     private String street;
@@ -14,9 +14,9 @@ public class Party implements IParty {
     private int zip;
     private String email;
 
-    private List<Account> accounts = new ArrayList<>();
+    private List<IAccount> accounts = new ArrayList<>();
 
-    protected Party(String name, String street, String city, String state, int zip, String email) {
+    protected Custormer(String name, String street, String city, String state, int zip, String email) {
         this.name = name;
         this.street = street;
         this.city = city;
@@ -49,11 +49,11 @@ public class Party implements IParty {
         return email;
     }
 
-    public void addAccount(Account account) {
+    public void addAccount(IAccount account) {
         accounts.add(account);
     }
 
-    public void removeAccount(Account account) {
+    public void removeAccount(IAccount account) {
         accounts.remove(account);
     }
 
@@ -61,7 +61,7 @@ public class Party implements IParty {
         System.err.println("Message sent to the owner: " + name);
     }
     
-    public List<Account> getAccounts(){
+    public List<IAccount> getAccounts(){
     	return accounts;
     }
 
@@ -70,10 +70,10 @@ public class Party implements IParty {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof Account)) {
+        if (!(o instanceof IAccount)) {
             return false;
         }
-        Party party = (Party) o;
+        Custormer party = (Custormer) o;
         if (this.name.equals(party.name) &&
         this.street.equals(party.street) &&
         this.city.equals(party.city) &&

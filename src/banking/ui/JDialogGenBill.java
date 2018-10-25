@@ -2,8 +2,10 @@ package banking.ui;
 
 import creditcard.CCAccount;
 import framework.account.Account;
+import framework.account.IAccount;
 import framework.account.entry.Entry;
-import framework.party.Party;
+import framework.account.entry.IEntry;
+import framework.party.Custormer;
 
 import javax.swing.*;
 
@@ -40,13 +42,13 @@ public class JDialogGenBill extends JDialog
 
 		String billstring = "";
 		double previousBalance, totalCharges, totalCredits;
-		for(Party party: bankFrm.getBanking().getParties()) {
+		for(Custormer party: bankFrm.getBanking().getParties()) {
 			billstring += "Name= "+party.getName()+"\r\n";
 			previousBalance = 0; totalCharges = 0; totalCredits = 0;
-			for(Account account: party.getAccounts()) {
+			for(IAccount account: party.getAccounts()) {
 				BankAccount ccAccount = (BankAccount)account;
 
-				for(Entry entry: ccAccount.getEntries()) {
+				for(IEntry entry: ccAccount.getEntries()) {
 					if(entry.getDate().getMonthValue()<LocalDate.now().getMonthValue()) {
 						previousBalance += entry.getAmount();
 					}

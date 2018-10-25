@@ -5,7 +5,7 @@ import banking.BankAccountFactory;
 import creditcard.CCAccountFactory;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -155,9 +155,9 @@ public class JDialog_AddPAccount extends JDialog
 		String email = JTextField_EM.getText();
 		LocalDate birthDay = LocalDate.parse(JTextField_BD.getText(), formatter);
 
-		Party newPerson = PartyFactory.createPerson(name, street, city, state, zip, email, birthDay);
+		Custormer newPerson = PartyFactory.createPerson(name, street, city, state, zip, email, birthDay);
 
-		List<Party> parties = main.getBanking().getParties();
+		List<Custormer> parties = main.getBanking().getParties();
 		List<Account> accounts = main.getBanking().getAccounts();
 
 		if (!parties.contains(newPerson)) {
@@ -169,10 +169,10 @@ public class JDialog_AddPAccount extends JDialog
 
 		BankAccount account;
 		if (JRadioButton_Chk.isSelected()) {
-			account = BankAccountFactory.getInstance().createCheckingAccount(newPerson, accountNumber);
+			account = (BankAccount)BankAccountFactory.getInstance().createAccount(newPerson, accountNumber, "CheckingAccount");
 		}
 		else {
-			account = BankAccountFactory.getInstance().createSavingAccount(newPerson, accountNumber);
+			account = (BankAccount)BankAccountFactory.getInstance().createAccount(newPerson, accountNumber, "");
 		}
 
 		accounts.add(account);

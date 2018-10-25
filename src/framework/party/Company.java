@@ -3,9 +3,9 @@ package framework.party;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Company extends Party implements IOrganization {
+public class Company extends Custormer implements ICompany {
 
-    private List<Person> employees;
+    private List<IPerson> employees;
 
     public Company(String name, String street, String city, String state, int zip, String email) {
         super(name, street, city, state, zip, email);
@@ -13,16 +13,15 @@ public class Company extends Party implements IOrganization {
         employees = new ArrayList<>();
     }
 
-    public void hirePerson(Person person) {
+    public void hirePerson(IPerson person) {
         employees.add(person);
     }
 
-    public void firePerson(Person person) {
+    public void firePerson(IPerson person) {
         employees.remove(person);
     }
 
     public int employeesNumber() {
         return employees.size();
     }
-
 }

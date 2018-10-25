@@ -2,7 +2,7 @@ package framework.party;
 
 import java.time.LocalDate;
 
-public class Person extends Party implements IPerson {
+public class Person extends Custormer implements IPerson {
 
     public Person(String name, String street, String city, String state, int zip, String email, LocalDate birthDay) {
         super(name, street, city, state, zip, email);

@@ -2,9 +2,9 @@ package framework;
 
 import framework.account.Account;
 import framework.account.IAccount;
-import framework.party.Party;
+import framework.party.Custormer;
 
-public class AccountFactory {
+public class AccountFactory implements IAccountFactory{
 	
 	protected AccountFactory() {}
 	private static AccountFactory accountFactory = null;
@@ -17,7 +17,7 @@ public class AccountFactory {
 		return accountFactory;
 	}
 	
-	public Account createAccount(Party party, String accountNumber) {
+	public Account createAccount(Custormer party, String accountNumber, String type) {
 		Account account = new Account(party, accountNumber);
 		party.addAccount(account);
 		return account;

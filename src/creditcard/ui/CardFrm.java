@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import creditcard.CCAccount;
 import framework.FinCo;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 import javax.swing.*;
 
@@ -177,7 +177,7 @@ public class CardFrm extends javax.swing.JFrame
         model.setRowCount(0);
         for (Account account : finCo.getAccounts()) {
             rowdata = new Object[model.getColumnCount()];
-            rowdata[0] = account.getOwner().getName();
+            rowdata[0] = ((Custormer)account.getOwner()).getName();
             rowdata[1] = account.getAccountNumber();
             rowdata[2] = ((CCAccount)account).getExpDate();
             rowdata[3] = ((CCAccount)account).getType();

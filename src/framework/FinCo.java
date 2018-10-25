@@ -6,11 +6,11 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 import framework.ui.MainScreen;
 
 public class FinCo extends JFrame {
-    private List<Party> parties;
+    private List<Custormer> parties;
     private List<Account> accounts;
     protected JFrame main;
     
@@ -38,12 +38,16 @@ public class FinCo extends JFrame {
     		.forEach(a->a.addInterest());
     }
     
-    public List<Party> getParties(){
+    public List<Custormer> getParties(){
     	return parties;
     }
 
     public List<Account> getAccounts(){
         return accounts;
+    }
+    
+    public String report() {
+    	return "";
     }
 
     public Account getAccountByNumber(String number) {

@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import framework.account.entry.Entry;
-import framework.party.Party;
+import framework.account.entry.IEntry;
+import framework.party.ICustomer;
+import framework.party.Custormer;
 import framework.rules.NotifyRule;
 
 public class Account implements IAccount {
 	
-	
 	private String accountNumber;
-	private List<Entry> entries;
+	private List<IEntry> entries;
 	private double interestRate = 0.05;
-	protected Party party;
+	protected Custormer party;
 
-	public Account(Party party, String accountNumber) {
+	public Account(Custormer party, String accountNumber) {
 		this.accountNumber = accountNumber;
 		this.party = party;
 		
@@ -31,7 +32,7 @@ public class Account implements IAccount {
 		return this.interestRate;
 	}
 
-    public List<Entry> getEntries(){
+    public List<IEntry> getEntries(){
     	return entries;
     }
 
@@ -51,7 +52,7 @@ public class Account implements IAccount {
 		if(new NotifyRule().chech(this)) party.notifyOwner();
 	}
 
-    public Party getOwner() {
+    public ICustomer getOwner() {
         return party;
     }
     

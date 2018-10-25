@@ -4,7 +4,7 @@ import banking.BankAccount;
 import banking.BankAccountFactory;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 import javax.swing.*;
 import java.util.*;
@@ -144,9 +144,9 @@ public class JDialog_AddCompAcc extends JDialog
 		int zip = Integer.parseInt(JTextField_ZIP.getText());
 		String email = JTextField_EM.getText();
 
-		Party newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
+		Custormer newCompany = PartyFactory.createCompany(name, street, city, state, zip, email);
 
-		List<Party> parties = main.getBanking().getParties();
+		List<Custormer> parties = main.getBanking().getParties();
 		List<Account> accounts = main.getBanking().getAccounts();
 
 		if (!parties.contains(newCompany)) {
@@ -158,10 +158,10 @@ public class JDialog_AddCompAcc extends JDialog
 
 		BankAccount account;
 		if (JRadioButton_Chk.isSelected()) {
-			account = BankAccountFactory.getInstance().createCheckingAccount(newCompany, accountNumber);
+			account = (BankAccount)BankAccountFactory.getInstance().createAccount(newCompany, accountNumber, "CheckingAccount");
 		}
 		else {
-			account = BankAccountFactory.getInstance().createSavingAccount(newCompany, accountNumber);
+			account = (BankAccount)BankAccountFactory.getInstance().createAccount(newCompany, accountNumber, "");
 		}
 
 		if (!accounts.contains(account)) {

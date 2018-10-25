@@ -2,13 +2,13 @@ package creditcard;
 
 import java.time.LocalDate;
 
-import framework.party.Party;
+import framework.party.Custormer;
 
 public class Gold extends CCAccount {
 	private double interestRate = 0.06;
 	private double mP = 0.10;
 	
-    public Gold(Party party, String accountNumber, LocalDate expDate) {
+    public Gold(Custormer party, String accountNumber, LocalDate expDate) {
         super(party, accountNumber, expDate);
     }
 

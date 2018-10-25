@@ -3,6 +3,7 @@ package banking.ui;
 import banking.BankAccount;
 import banking.Bank;
 import framework.account.Account;
+import framework.party.Custormer;
 import framework.ui.MainScreen;
 
 import javax.swing.*;
@@ -222,10 +223,10 @@ public class BankFrm extends MainScreen
         	BankAccount bankAccount = (BankAccount)account;
             rowdata = new Object[model.getColumnCount()];
 			rowdata[0] = bankAccount.getAccountNumber();
-            rowdata[1] = bankAccount.getOwner().getName();
-            rowdata[2] = bankAccount.getOwner().getStreet();
-            rowdata[3] = bankAccount.getOwner().getCity();
-            rowdata[4] = bankAccount.getOwner().getState();
+            rowdata[1] = ((Custormer)bankAccount.getOwner()).getName();
+            rowdata[2] = ((Custormer)bankAccount.getOwner()).getStreet();
+            rowdata[3] = ((Custormer)bankAccount.getOwner()).getCity();
+            rowdata[4] = ((Custormer)bankAccount.getOwner()).getState();
             rowdata[5] = bankAccount.getOwner().getClass().getSimpleName();
             rowdata[6] = bankAccount.getType();
             rowdata[7] = bankAccount.getBalance();

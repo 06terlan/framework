@@ -7,8 +7,10 @@ import javax.swing.*;
 
 import creditcard.CCAccount;
 import framework.account.Account;
+import framework.account.IAccount;
 import framework.account.entry.Entry;
-import framework.party.Party;
+import framework.account.entry.IEntry;
+import framework.party.Custormer;
 
 public class JDialogGenBill extends javax.swing.JDialog
 {
@@ -39,17 +41,17 @@ public class JDialogGenBill extends javax.swing.JDialog
 		
 		String billstring = "";
 		double previousBalance, totalCharges, totalCredits, newBalance;
-		for(Party party: cardFrm.getFinCo().getParties()) {
-			for(Account account: party.getAccounts()) {
+		for(Custormer party: cardFrm.getFinCo().getParties()) {
+			for(IAccount account: party.getAccounts()) {
 				previousBalance = 0; totalCharges = 0; totalCredits = 0; newBalance = 0;
 				CCAccount ccAccount = (CCAccount)account;
 				
-				for(Entry entry: ccAccount.getEntries()) {
+				for(IEntry entry: ccAccount.getEntries()) {
 					if(entry.getDate().getMonthValue()<LocalDate.now().getMonthValue()) {
 						previousBalance += entry.getAmount();
 					}
 					if(entry.getDate().getMonthValue()==LocalDate.now().getMonthValue()) {
-						if(entry.getName().equals("Withdraw Money")) totalCharges += entry.getAmount();
+						if(entry.getName().equals("Withdraw Money")) totalCharges += -1 * entry.getAmount();
 						else if(entry.getName().equals("Deposit Money")) totalCredits += entry.getAmount();
 					}
 				}

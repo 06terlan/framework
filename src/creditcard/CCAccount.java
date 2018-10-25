@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import creditcard.rules.CCNotifyRule;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 import framework.rules.NotifyRule;
 
 public abstract class CCAccount extends Account {
@@ -14,7 +14,7 @@ public abstract class CCAccount extends Account {
 		return expDate;
 	}
 
-	public CCAccount(Party party, String accountNumber, LocalDate expDate) {
+	public CCAccount(Custormer party, String accountNumber, LocalDate expDate) {
     	super(party, accountNumber);
     	this.expDate = expDate;
     }

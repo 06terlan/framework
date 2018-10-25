@@ -6,7 +6,7 @@ import framework.AccountFactory;
 import framework.FinCo;
 import framework.PartyFactory;
 import framework.account.Account;
-import framework.party.Party;
+import framework.party.Custormer;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -142,9 +142,9 @@ public class JDialog_AddPAcc extends JDialog
 		String email = JTextField_EM.getText();
 		LocalDate birthDay = LocalDate.parse(JTextField_BD.getText(), formatter);
 
-		Party newPerson = PartyFactory.createPerson(name, street, city, state, zip, email, birthDay);
+		Custormer newPerson = PartyFactory.createPerson(name, street, city, state, zip, email, birthDay);
 
-		List<Party> parties = main.finCo.getParties();
+		List<Custormer> parties = main.finCo.getParties();
 		List<Account> accounts = main.finCo.getAccounts();
 
 		if (!parties.contains(newPerson)) {
@@ -154,7 +154,7 @@ public class JDialog_AddPAcc extends JDialog
             newPerson = parties.get(index);
 		}
 
-		Account account = AccountFactory.getInstance().createAccount(newPerson, accountNumber);
+		Account account = AccountFactory.getInstance().createAccount(newPerson, accountNumber, "");
         if (!accounts.contains(account)) {
             newPerson.addAccount(account);
             accounts.add(account);
