@@ -15,7 +15,6 @@ public class Account implements IAccount {
 	private List<Entry> entries;
 	private double interestRate = 0.05;
 	protected Party party;
-	private String type = "Simple";
 
 	public Account(Party party, String accountNumber) {
 		this.accountNumber = accountNumber;
@@ -30,10 +29,6 @@ public class Account implements IAccount {
 
     public double getInterestRate() {
 		return this.interestRate;
-	}
-
-	public String getType() {
-		return this.type;
 	}
 
     public List<Entry> getEntries(){

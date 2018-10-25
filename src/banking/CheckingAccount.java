@@ -17,4 +17,9 @@ public class CheckingAccount extends BankAccount {
     public CheckingAccount(Party party, String accountNumber) {
         super(party, accountNumber);
     }
+
+	@Override
+	public String getType() {
+		return "Checking";
+	}
 }

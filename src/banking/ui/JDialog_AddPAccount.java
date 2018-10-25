@@ -175,15 +175,9 @@ public class JDialog_AddPAccount extends JDialog
 			account = BankAccountFactory.getInstance().createSavingAccount(newPerson, accountNumber);
 		}
 
-		if (!accounts.contains(account)) {
-			newPerson.addAccount(account);
-			accounts.add(account);
-			main.updateTable();
-			dispose();
-		} else {
-			JOptionPane.showMessageDialog(this, "Cannot create account, account number already exists","Error!", JOptionPane.ERROR_MESSAGE);
-		}
-
+		accounts.add(account);
+		main.updateTable();
+		dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)

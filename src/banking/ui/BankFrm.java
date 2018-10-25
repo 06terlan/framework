@@ -1,9 +1,7 @@
 package banking.ui;
 
 import banking.BankAccount;
-import banking.Banking;
-import creditcard.CCAccount;
-import framework.FinCo;
+import banking.Bank;
 import framework.account.Account;
 import framework.ui.MainScreen;
 
@@ -11,7 +9,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 /**
  * A basic JFC based application.
@@ -23,7 +20,7 @@ public class BankFrm extends MainScreen
     private JScrollPane JScrollPane1;
     BankFrm myframe;
     private Object rowdata[];
-    private Banking banking;
+    private Bank banking;
 
 	JPanel JPanel1 = new JPanel();
 	JButton JButton_NewCCAccount = new JButton();
@@ -33,11 +30,11 @@ public class BankFrm extends MainScreen
 	JButton JButton_Exit = new JButton();
 
 
-	public Banking getBanking() {
+	public Bank getBanking() {
 		return banking;
 	}
 
-	public BankFrm(Banking banking)
+	public BankFrm(Bank banking)
 	{
 		myframe = this;
 		this.banking = banking;
@@ -85,6 +82,11 @@ public class BankFrm extends MainScreen
 		JButton_Withdraw.setText("Withdraw");
 		JPanel1.add(JButton_Withdraw);
 		JButton_Withdraw.setBounds(468,164,96,33);
+		
+		JButton_GenBill.setText("Report");
+		JButton_GenBill.setActionCommand("jbutton");
+		JPanel1.add(JButton_GenBill);
+		JButton_GenBill.setBounds(468,204,96,33);
 
 		JButton_AddInterest.setText("Add interest");
 		JPanel1.add(JButton_AddInterest);
@@ -95,17 +97,89 @@ public class BankFrm extends MainScreen
 		JButton_Exit.setBounds(468,248,96,31);
 
 
-		BankFrm.SymWindow aSymWindow = new BankFrm.SymWindow();
-		this.addWindowListener(aSymWindow);
-		MainScreen.SymAction lSymAction = new BankFrm.SymAction();
-		JButton_Exit.addActionListener(lSymAction);
-		JButton_PerAC.addActionListener(lSymAction);
-		JButton_CompAC.addActionListener(lSymAction);
-		JButton_Deposit.addActionListener(lSymAction);
-		JButton_Withdraw.addActionListener(lSymAction);
-		JButton_AddInterest.addActionListener(lSymAction);
+		SymWindow aSymWindow = new SymWindow();
+        this.addWindowListener(aSymWindow);
+        SymAction lSymAction = new SymAction();
+        JButton_Exit.addActionListener(lSymAction);
+        JButton_PerAC.addActionListener(lSymAction);
+        JButton_CompAC.addActionListener(lSymAction);
+        JButton_Deposit.addActionListener(lSymAction);
+        JButton_GenBill.addActionListener(lSymAction);
+        JButton_Withdraw.addActionListener(lSymAction);
+        JButton_AddInterest.addActionListener(lSymAction);
 
 	}
+	
+	public class SymAction implements java.awt.event.ActionListener
+    {
+        public void actionPerformed(ActionEvent event)
+        {
+            Object object = event.getSource();
+            if (object == JButton_Exit)
+                JButtonExit_actionPerformed(event);
+            else if (object == JButton_PerAC)
+                JButtonPerAC_actionPerformed(event);
+            else if (object == JButton_CompAC)
+                JButtonCompAC_actionPerformed(event);
+            else if (object == JButton_Deposit)
+                JButtonDeposit_actionPerformed(event);
+            else if (object == JButton_Withdraw)
+                JButtonWithdraw_actionPerformed(event);
+            else if (object == JButton_AddInterest)
+                JButtonAddinterest_actionPerformed(event);
+            else if (object == JButton_GenBill)
+				JButtonGenerateBill_actionPerformed(event);
+        }
+    }
+	
+	void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event)
+	{
+		JDialogGenBill billFrm = new JDialogGenBill(this);
+		billFrm.setBounds(450, 20, 400, 350);
+		billFrm.show();
+	    
+	}
+	
+    protected void JButtonWithdraw_actionPerformed(ActionEvent event)
+    {
+        // get selected name
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >=0){
+            String accountNumber = (String) model.getValueAt(selection, 0);
+
+            JDialog_Withdraw wd = new JDialog_Withdraw(this, banking.getAccountByNumber(accountNumber));
+            wd.setBounds(430, 15, 275, 140);
+            wd.setVisible(true);
+
+            // compute new amount
+            this.updateTable();
+        }
+
+
+    }
+	
+    protected void JButtonDeposit_actionPerformed(ActionEvent event)
+    {
+        int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+        if (selection >= 0){
+            String accountNumber = (String) model.getValueAt(selection, 0);
+
+            //Show the dialog for adding deposit amount for the current mane
+            JDialog_Deposit dep = new JDialog_Deposit(this, banking.getAccountByNumber(accountNumber));
+            dep.setBounds(430, 15, 275, 140);
+            dep.setVisible(true);
+
+            // compute new amount
+            this.updateTable();
+        }
+    }
+	
+	protected void JButtonAddinterest_actionPerformed(ActionEvent event)
+    {
+		banking.addInterest();
+        this.updateTable();
+        JOptionPane.showMessageDialog(JButton_AddInterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
+    }
 
 	@Override
 	protected void JButtonPerAC_actionPerformed(ActionEvent event)
@@ -144,16 +218,17 @@ public class BankFrm extends MainScreen
     @Override
     public void updateTable() {
         model.setRowCount(0);
-        for (BankAccount account : banking.getBankingAccounts()) {
+        for (Account account : banking.getAccounts()) {
+        	BankAccount bankAccount = (BankAccount)account;
             rowdata = new Object[model.getColumnCount()];
-			rowdata[0] = account.getAccountNumber();
-            rowdata[1] = account.getOwner().getName();
-            rowdata[2] = account.getOwner().getStreet();
-            rowdata[3] = account.getOwner().getCity();
-            rowdata[4] = account.getOwner().getState();
-            rowdata[5] = account.getOwner().getClass().getSimpleName();
-            rowdata[6] = ((BankAccount)account).getType();
-            rowdata[7] = account.getBalance();
+			rowdata[0] = bankAccount.getAccountNumber();
+            rowdata[1] = bankAccount.getOwner().getName();
+            rowdata[2] = bankAccount.getOwner().getStreet();
+            rowdata[3] = bankAccount.getOwner().getCity();
+            rowdata[4] = bankAccount.getOwner().getState();
+            rowdata[5] = bankAccount.getOwner().getClass().getSimpleName();
+            rowdata[6] = bankAccount.getType();
+            rowdata[7] = bankAccount.getBalance();
             model.addRow(rowdata);
         }
     }

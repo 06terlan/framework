@@ -15,4 +15,9 @@ public class SavingAccount extends BankAccount {
         super(party, accountNumber);
     }
 
+	@Override
+	public String getType() {
+		return "Saving";
+	}
+
 }

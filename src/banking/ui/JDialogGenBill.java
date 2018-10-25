@@ -6,6 +6,9 @@ import framework.account.entry.Entry;
 import framework.party.Party;
 
 import javax.swing.*;
+
+import banking.BankAccount;
+
 import java.time.LocalDate;
 
 public class JDialogGenBill extends JDialog
@@ -41,48 +44,28 @@ public class JDialogGenBill extends JDialog
 			billstring += "Name= "+party.getName()+"\r\n";
 			previousBalance = 0; totalCharges = 0; totalCredits = 0;
 			for(Account account: party.getAccounts()) {
-				CCAccount ccAccount = (CCAccount)account;
+				BankAccount ccAccount = (BankAccount)account;
 
 				for(Entry entry: ccAccount.getEntries()) {
 					if(entry.getDate().getMonthValue()<LocalDate.now().getMonthValue()) {
 						previousBalance += entry.getAmount();
 					}
 					if(entry.getDate().getMonthValue()==LocalDate.now().getMonthValue()) {
-						if(entry.getName().equals("Withdraw Money")) totalCharges += entry.getAmount();
+						if(entry.getName().equals("Withdraw Money")) totalCharges += -1*entry.getAmount();
 						else if(entry.getName().equals("Deposit Money")) totalCredits += entry.getAmount();
 					}
 				}
 
 				billstring += "CC number = "+ccAccount.getAccountNumber()+"\r\n";
 				billstring += "CC number = "+ccAccount.getType()+"\r\n";
-				billstring += "Total Credits = $"+totalCredits+"\r\n";
-				billstring += "Total Charges = $"+totalCharges+"\r\n";
-				billstring += "New balance = $"+(totalCharges)+"\r\n";
+				billstring += "Total Deposit = $"+totalCredits+"\r\n";
+				billstring += "Total Withdraw = $"+totalCharges+"\r\n";
+				billstring += "New balance = $"+(totalCredits-totalCharges)+"\r\n";
 				billstring += "\r\n";
 				billstring += "\r\n";
 			}
 		}
 
-//		String billstring = "Name= John White\r\n";
-//		billstring += "Address= 1000 Main, Fairfield, IA, 52556\r\n";
-//		billstring += "CC number= 2341 3421 4444 5689\r\n";
-//		billstring += "CC type= GOLD\r\n";
-//		billstring += "Previous balance = $ 100.00\r\n";
-//		billstring += "Total Credits = $ 25.00\r\n";
-//		billstring += "Total Charges = $ 560.00\r\n";
-//		billstring += "New balance = $ 638.75\r\n";
-//		billstring += "Total amount due = $ 63.88\r\n";
-//		billstring += "\r\n";
-//		billstring += "\r\n";
-//		billstring += "Name= Frank Summer\r\n";
-//		billstring += "Address= 1000 N, 4th St, Fairfield, IA, 52556\r\n";
-//		billstring += "CC number= 0099 3421 4321 6577\r\n";
-//		billstring += "CC type= BRONZE\r\n";
-//		billstring += "Previous balance = $ 200.00\r\n";
-//		billstring += "Total Credits = $ 45.00\r\n";
-//		billstring += "Total Charges = $ 150.00\r\n";
-//		billstring += "New balance = $ 313.53\r\n";
-//		billstring += "Total amount due = $ 34.49\r\n";
 		JTextField1.setText(billstring);
 		//}}
 
@@ -94,7 +77,7 @@ public class JDialogGenBill extends JDialog
 
 	//{{DECLARE_CONTROLS
 	JScrollPane JScrollPane1 = new JScrollPane();
-	JTextField JTextField1 = new JTextField();
+	JTextArea JTextField1 = new JTextArea();
 	JButton JButton_OK = new JButton();
 	//}}
 
